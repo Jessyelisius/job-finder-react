@@ -1,8 +1,19 @@
 import Header from "./../Components/Header.jsx";
 import Footer from "./../Components/Footer.jsx";
 import UserInfoCard from "../Components/UserInfoCard.jsx";
+import cookies from 'js-cookies';
+import { useState } from "react";
 
 function Profile() {
+
+  const Token = cookies.getItem('token')
+
+  useState(() => {
+    if(Token == undefined || Token == null || Token == ''){
+      window.location.href='/signin'
+    } 
+  })
+
   return (
     <div>
       <Header page="profile" />

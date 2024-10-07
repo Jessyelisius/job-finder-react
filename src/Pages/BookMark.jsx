@@ -2,11 +2,13 @@ import React from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import UserInfoCard from "../Components/UserInfoCard";
+import Template from "../Components/template";
 
 function BookMark() {
   return (
-    <div>
-      <Header page={"bookmark"} />
+    <Template>
+    {/* // <div>
+    //   <Header page={"bookmark"} /> */}
       <section className=" job-bg page  ad-profile-page">
         <div className="container">
           <div className="breadcrumb-section">
@@ -480,8 +482,9 @@ function BookMark() {
           </div>
         </div>
       </section>
-      <Footer />
-    </div>
+      {/* <Footer />
+    </div> */}
+    </Template>
   );
 }
 

@@ -1,7 +1,27 @@
 import Header from "./../Components/Header.jsx";
 import Footer from "./../Components/Footer.jsx";
+import { useParams } from "react-router-dom";
+import { config } from "../Components/General_Function.jsx";
+import axios from "axios";
+import { useState } from "react";
 
-function JobDetails() {
+
+
+const JobDetails = () => {
+
+  let param = useParams();
+  console.log(param.id);
+
+  const [content, setContent] = useState()
+
+  const FetchData = ()=>{
+      let url = 'http://get_data_url';
+      axios.get(url, config)
+      .then(response =>{
+          setContent(response.data.data);
+      }) 
+  }
+  
   return (
     <div>
       <Header page="Details" />

@@ -20,7 +20,7 @@ function Header({ page }) {
               </span>
             </button>
             <a className="navbar-brand" href="/">
-              <img className="img-fluid" src="images/logo.png" alt="Logo" />
+              <img className="img-fluid" src="/images/logo.png" alt="Logo" />
             </a>
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="nav navbar-nav">

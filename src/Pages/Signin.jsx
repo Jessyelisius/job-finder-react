@@ -1,8 +1,86 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import axios from "axios";
+import { Notify } from "../Components/Notify";
+import { config } from "../Components/General_Function";
+import Swal from "sweetalert2";
+import cookies from 'js-cookies';
 
-function Signin() {
+
+const Signin = () => {
+
+  const [user, setUser] = useState({
+    email_address:'',
+    password:''
+    });
+
+  const handleChange = (event) =>{
+      let {name, value} = event.target
+      setUser({...user, [name]:value})
+   }
+
+   const handleSubmit=(event) => {
+    event.preventDefault();
+     
+  
+      // let err = error;
+  
+      // if (user.password.length<8){
+  
+      //   is_valid = false;
+      //   err.password = 'pls enter minimum chars of 8'
+      // }
+      // if (user.password !== user.confirm_password){
+  
+      //   is_valid = false;
+      //   err.password = 'password not match'
+      // }
+  
+      // setError(err);
+  
+      // if(is_valid){
+      Swal.fire({
+        imageUrl:'/images/logo.png',
+        imageHeight:100,
+        showConfirmButton: false,
+      })  
+      
+      const fd = new FormData();
+        fd.append('email_address', user.email_address);
+        fd.append('password', user.password);
+  
+        let url = 'http://solidrockschool.com.ng/api/people/applicant/login';
+  
+        axios.post(url, fd, config)
+        .then((response) =>{
+          if(response.data.status === 200) {
+
+            cookies.setIem('token', response.data.token)
+            cookies.setIem('code', response.data.code)
+
+            window.location.href='/profile'
+
+            Notify({title:"saved", 
+              message:response.data.message, 
+              type:"success"
+            });
+            
+          }else{
+            Notify({title:"error", 
+              message:response.data.message, 
+              type:"dnager"
+            });
+          }
+        }).catch(err=>{
+          console.log(err);
+        })
+  
+      // }
+   }
+
+
+
   return (
     <div>
       <Header page={"signin"} />
@@ -12,22 +90,30 @@ function Signin() {
             <div className="user-account">
               <h2>User Login</h2>
 
-              <form action="#">
+              <form action="#" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
-                    type="text"
+                    type="email"
+                    required
+                    value={user.email_address}
+                    onChange={handleChange}
                     className="form-control"
-                    placeholder="Username"
+                    placeholder="User Email"
+                    name="email_address" 
                   />
                 </div>
                 <div className="form-group">
                   <input
                     type="password"
+                    required
+                    name="password"
+                    value={user.password}
+                    onChange={handleChange}
                     className="form-control"
-                    placeholder="Password"
+                    placeholder="User_Password"
                   />
                 </div>
-                <button type="submit" href="#" className="btn">
+                <button type="submit" className="btn">
                   Login
                 </button>
               </form>
